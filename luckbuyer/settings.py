@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'home',
     'orders',
     'stockmanager',
     # 'channels',
@@ -61,6 +62,7 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR , "stockmanager/templates"),
             os.path.join(BASE_DIR , "orders/templates"),
+            os.path.join(BASE_DIR , "home/templates"),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -131,7 +133,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR , "static_root")
 STATICFILES_DIR = [
     os.path.join(BASE_DIR , "stockmanager/static/"),
-    os.path.join(BASE_DIR , "orders/static/")
+    os.path.join(BASE_DIR , "orders/static/"),
+    os.path.join(BASE_DIR , "home/static"),
 ]
 
 MEDIA_URL = "/media/"
