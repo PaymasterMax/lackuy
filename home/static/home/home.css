@@ -1,0 +1,134 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+.chat {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background-color: red;
+  padding: 4px;
+  border-radius: 200px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  background-color: #2d2525;
+}
+.chat>p {
+  padding: 15px 0px;
+  color: #fff;
+  font-weight: sans serif;
+}
+
+.chat:hover {
+  animation: bouncychat 2s ease-out infinite;
+  cursor: pointer;
+}
+
+
+.chatArea {
+  display: none;
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  height: 80%;
+  width: 30%;
+  background-color: #9a9;
+  border-radius: 5px;
+  overflow-y: auto;
+}
+
+.closeX:hover {
+  font-size: 2em;
+  font-weight: bold;
+  cursor: pointer;
+  color: red;
+}
+
+.closeX {
+  position: relative;
+  float: right;
+  right: 2px;
+  top: 0px;
+  font-size: 2em;
+  padding: 3px;
+}
+
+.mytext {
+  background-color: #123;
+  color: #fff;
+  padding: 7px;
+  width: 90%;
+  float: right;
+  margin-top: 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.thetext {
+  background-color: #432;
+  color: #fff;
+  padding: 7px;
+  width: 90%;
+  float: left;
+  margin-top: 10px;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+
+.chatform {
+  margin: 10px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+
+
+@keyframes bouncychat {
+  0%{
+    background-color: #9e9e9e;
+  }
+  50%{
+    background-color: #607d8b;
+  }
+  100% {
+    background-color: #ff9800;
+  }
+}
+
+
+@keyframes animatepopup {
+  0% {
+    width: 0%;
+    height: 20%;
+  }
+  25% {
+    width: 8%;
+    height: 40%;
+  }
+  50% {
+    width: 16%;
+    height: 60%;
+  }
+  75%{
+
+  }
+  100% {
+    width: 32%;
+    height: 80%;
+  }
+}
+
+@keyframes animateclose {
+    0% {
+      transform: scale(1,1);
+    }
+    50% {
+      transform: scale(-2,-2);
+    }
+    100% {
+      transform: scale(-100,-100);
+    }
+  }

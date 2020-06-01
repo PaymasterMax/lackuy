@@ -37,9 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'home',
-    'orders',
-    'stockmanager',
+    'home.apps.HomeConfig',
+    'login.apps.LoginConfig',
+    'signup.apps.SignupConfig',
+    'orders.apps.OrdersConfig',
+    'chatroom.apps.ChatroomConfig',
+    'stockmanager.apps.StockmanagerConfig',
     # 'channels',
     'rest_framework',
 ]
@@ -60,6 +63,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+            os.path.join(BASE_DIR , "login/templates"),
+            os.path.join(BASE_DIR , "signup/templates"),
             os.path.join(BASE_DIR , "stockmanager/templates"),
             os.path.join(BASE_DIR , "orders/templates"),
             os.path.join(BASE_DIR , "home/templates"),
@@ -132,6 +137,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR , "static_root")
 STATICFILES_DIR = [
+    os.path.join(BASE_DIR , "login/static/"),
+    os.path.join(BASE_DIR , "signup/static/"),
     os.path.join(BASE_DIR , "stockmanager/static/"),
     os.path.join(BASE_DIR , "orders/static/"),
     os.path.join(BASE_DIR , "home/static"),

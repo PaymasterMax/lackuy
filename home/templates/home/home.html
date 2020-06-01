@@ -1,10 +1,79 @@
+{% load static %}
+{% load homefilter %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0">
+    <meta name="keywords" content="Shopping,LuckBuyer,Luck,Buyer">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'home/home.css' %}">
     <title>LuckBuyer | Home</title>
   </head>
   <body>
+    <div class="home">
+      <div class="nav">
+        <a href="{% url 'signup:signup' %}">signup</a>
+        <a href="{% url 'login:login' %}">login</a>
+        <a href="{% url 'stockmanager:stocks' %}">Stock</a>
+        <a href="{% url 'orders:orders' %}">Order</a>
+      </div>
+      <div class="main">
+          <div class="stocks">
+            {% for item in all_stock %}
 
+            {% endfor %}
+          </div>
+      </div>
+      <div class="chat" onclick="open_chat();">
+          <p>
+            Chats
+          </p>
+      </div>
+          <div class="chatArea" id="chatArea">
+            <p class="closeX" onclick="close_chat();">&times;</p>
+            <!-- all conversations -->
+            <div class="chat-converstion">
+                {% for chat in chats %}
+                    {% if chat.current_user_info.uid|check_user:user_info.uid %}
+                      <div class="mytext">
+                        <p>
+                          {{chat.current_user_info.username}}
+                        </p>
+                          {{chat.chat_content}}
+                      </div>
+                    {% else %}
+                      <div class="thetext">
+                        <p>
+                          {{chat.opponent_info.username}}
+                        </p>
+                        {{chat.chat_content}}
+                      </div>
+                    {% endif %}
+                {% endfor %}
+        </div>
+            <!-- end of converstions -->
+            <!-- chat form -->
+            <div class="submit answer">
+                <form class="chatform" action="{% url 'chatroom:chat_view' %}" method="post">
+                  {% csrf_token %}
+                  <textarea name="textcontn" rows="3" cols="20"></textarea>
+                  <input type="hidden" name="opponent_id" value="1">
+                  <br>
+                  <input type="submit" name="submit" value="submit">
+                </form>
+            </div>
+          </div>
+          <!-- end of chat area -->
+    </div>
   </body>
+  <script type="text/javascript">
+    function close_chat() {
+      var chat = document.getElementById('chatArea');
+      chat.setAttribute("style" , "animation:animateclose .4s 1;");
+    }
+    function open_chat(){
+      var chat = document.getElementById('chatArea');
+      chat.setAttribute("style" , "display:block;animation:animatepopup .4s 1;");
+    }
+  </script>
 </html>

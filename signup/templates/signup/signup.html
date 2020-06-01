@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="icon" href="{% static 'questions/images/devcodes.svg' %}" name="favicon">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<meta lang="en" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="{% static 'signup/styles.css' %}"/>
+	<link rel="stylesheet" href="{% static 'home/spinner.css' %}">
+	<title>DevCodes | signup </title>
+</head>
+<body>
+	<!-- Begining of spinner -->
+	<div class="loader-wrapper" id="ld">
+		<span class="loader"><span class="loader-inner"></span></span>
+			</div>
+			<!-- End of spinner -->
+			<div class="logoN">
+				<img src="{% static 'questions/images/devtitle.svg' %}" class="myimg" alt="logo">
+			</div>
+	<div class="bon">
+		<div class="bony">
+			<form action="{% url 'signup:signup' %}" method="post" enctype="multipart/form-data" onabort="cancel()">
+				<h2 class="title">Join DevCodes</h2>
+					{% for error in error_log %}
+					<label class="inputlabel">
+						{{error}}
+				</label>
+					{% endfor %}
+					{% csrf_token %}
+				<!-- <input type="hidden" name="_token" value="{{ csrf_token }}" id="tok"> -->
+				<input type="text" placeholder="Username" name = "username" required autocomplete="true" class="input" onchange="userauthentication()" id="uname">
+				<label id="usernamevalid" class="validation"></label>
+				<input type="phone" name="pnumber" placeholder="phone" class="input" id="phone">
+				<input type="email" name="email" placeholder="email" required autocomplete="true" class="input" onchange="emailauthentication()" id="ema">
+				<label id="emailvalid" class="validation"></label>
+				<!-- <input type="password" name = "pass1" placeholder="Password" id="pass1" required  class="input passfield" onchange="passwordmaster(pass1)"> <i class="fa fa-eye" id="stats" aria-hidden="true" onclick="showpass();"></i>
+				<label id="passwordm" class="validation"></label> -->
+
+				<input type="password" name = "pass1" placeholder="Password" id="pass1"
+		    required  class="input" onchange="passwordmaster()">
+		    <label id="shortPass" class="pass">* short password * </label>
+
+				<!-- <input type="password" placeholder="confirm password" name="pass2" id="pass2" class="input passfield" onchange="passwordmaster(pass2)" required> -->
+				<input type="password" placeholder="confirm password" name="pass2" id="pass2"
+		    class="input" onchange="passwordmaster()" required>
+		    <label id ="mismatch" class="miss"> * password mismatch *</label>
+
+				<input type="text" placeholder="Fav programming Language" name = "hobby" required autocomplete="true" class="input" id="hobby">
+				<label id ="favlang" class="favlang"> * Programming language must be filled *</label>
+				<input type="file" name="profilepic" value="Profile picture" class="input" id="profile" required>
+				<!-- <input type="submit" name="submit" value="signup" id="submit" class="input" onclick="spinnermanager()"> -->
+				<button type="submit" name="submit" class="btn btn-info" id="submit" onclick="form_manager()" onabort="cancel()">
+					Signup
+					<!-- <i class="" id="submit"></i> -->
+					<i class="" id="spin"></i>
+				</button>
+			</form>
+				<p style="text-align:center">
+					<span class="title">Already have an account?</span>
+						<a class="link" href="{% url 'login:login' %}">
+						Sign in
+					</a>
+				</p>
+	</div>
+</div>
+	<script src="{% static 'signup/devcodes.js' %}" charset="utf-8"></script>
+	<script type="text/javascript">
+
+	function userauthentication(){
+		var xhttp = new XMLHttpRequest();
+		var user = document.getElementById("uname").value;
+		xhttp.onreadystatechange = function()
+		{
+			if(this.readyState == 4 && this.status == 200)
+			{
+				if(this.responseText == "true")
+					{
+						document.getElementById("usernamevalid").innerHTML = "username taken";
+						document.getElementById("usernamevalid").style.color = "#f00";
+						// document.getElementById("submit").disabled=true;
+					}
+
+					else {
+						document.getElementById("usernamevalid").innerHTML = "username available";
+						document.getElementById("usernamevalid").style.color = "#7fa";
+						// document.getElementById("submit").enabled=true;
+					}
+			}
+		}
+		xhttp.open("POST" , "{% url 'signup:userauthentication' %}" , true);
+		xhttp.setRequestHeader("Content-Type" , "application/x-www-form-urlencoded");
+		xhttp.setRequestHeader("X-CSRFToken" , "{{csrf_token}}");
+		xhttp.send("username="+user);
+	}
+
+		function emailauthentication(){
+			var xhttp = new XMLHttpRequest();
+			var email = document.getElementById("ema").value;
+			xhttp.onreadystatechange = function(){
+				if(this.readyState == 4 && this.status == 200)
+				{
+					if(this.responseText == "true")
+					{
+						document.getElementById("emailvalid").innerHTML = "Email in use by another account";
+						document.getElementById("emailvalid").style.color = "#f00";
+						// document.getElementById("submit").disabled=true;
+					}
+
+					else if(this.responseText == "false"){
+						document.getElementById("emailvalid").innerHTML = "email available";
+						document.getElementById("emailvalid").style.color = "#7fa";
+						// document.getElementById("submit").enabled=true;
+					}
+					else{
+						document.getElementById("emailvalid").innerHTML = this.responseText;
+						document.getElementById("emailvalid").style.color = "#f00f00";
+					}
+				}
+			}
+			xhttp.open("POST" , "{% url 'signup:emailauthentication' %}" , true);
+			xhttp.setRequestHeader("Content-Type" , "application/x-www-form-urlencoded");
+			xhttp.setRequestHeader("X-CSRFToken" , "{{csrf_token}}");
+			xhttp.send("email="+email);
+		}
+	</script>
+</body>
+</html>
